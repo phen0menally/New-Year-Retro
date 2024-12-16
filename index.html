@@ -16,9 +16,14 @@
 
         header {
             text-align: center;
-            padding: 20px;
-            background: url("assets/background-theme.jpeg");
-            color: white;
+    padding: 20px;
+    background: url("assets/background-theme.jpeg");
+    color: white;                 /* Основной цвет текста */
+    font-family: 'Arial', sans-serif; /* Шрифт для читаемости */
+    font-size: 36px;              /* Размер текста */
+    font-weight: bold;            /* Жирный текст */
+    -webkit-text-stroke: 1px green; /* Тонкая зелёная обводка */
+    text-shadow: none;            /* Без лишних теней */
         }
 
         header h1 {
@@ -156,7 +161,7 @@
     <div class="question">
         <img src="assets/kandinsky-1.png" alt="Стори за год">
         <div class="question-content">
-            <h3>Вопрос 1: Сколько было закрыто сторей за год?</h3>
+            <h3>Вопрос 1: Сколько сторей закрыто за год?</h3>
             <input type="number" id="answer1" placeholder="Ваш ответ">
             <button onclick="checkAnswer(1, 129)">Показать результат</button>
             <div id="result1" class="result"></div>
@@ -198,11 +203,11 @@
 
     <!-- Question 5 -->
     <div class="question">
-        <img src="image5.jpg" alt="Дед Мороз">
+        <img src="assets/kandinsky-5.png" alt="Команда Mobile">
         <div class="question-content">
-            <h3>Вопрос 5: Сколько подарков будет под ёлкой?</h3>
+            <h3>Вопрос 5: Сколько людей входит в состав СББОЛ IT Mobile?</h3>
             <input type="number" id="answer5" placeholder="Ваш ответ">
-            <button onclick="checkAnswer(5, 9)">Показать результат</button>
+            <button onclick="checkAnswer(5, 45)">Показать результат</button>
             <div id="result5" class="result"></div>
         </div>
     </div>
@@ -212,6 +217,8 @@
         <!-- Отступ добавлен с помощью параграфа -->
         <p style="margin-top: 20px; color: white; font-size: 16px; text-align: center;"></p>
     </div>
+
+
 
 </div>
 
@@ -234,18 +241,18 @@
             const diff = Math.abs(correctAnswer - userAnswer);
             let scoreForQuestion = 0;
 
-                if (userAnswer == correctAnswer) {
+                if (questionNum < 5 && userAnswer == correctAnswer) {
         resultDiv.innerHTML = `Ты попал в самое яблочко! Правильный ответ: ${correctAnswer}`;
         resultDiv.className = "result gold";
-        scoreForQuestion = 20;
-    } else if (questionNum <= 2 && diff <= 5) {
+        scoreForQuestion = 25;
+    } else if (questionNum <= 2 && diff <= 8) {
         resultDiv.innerHTML = `Будем считать что ты угадал! Правильный ответ: ${correctAnswer}`;
         resultDiv.className = "result green";
-        scoreForQuestion = 15;
-    } else if (questionNum <= 2 && diff <= 10) {
+        scoreForQuestion = 20;
+    } else if (questionNum <= 2 && diff <= 12) {
         resultDiv.innerHTML = `Практически угадал! Очень близко. Правильный ответ: ${correctAnswer}`;
-        resultDiv.className = "result gold";
-        scoreForQuestion = 10;
+        resultDiv.className = "result yellow";
+        scoreForQuestion = 15;
     } else if (questionNum <= 2 && userAnswer < correctAnswer - 10) {
         resultDiv.innerHTML = `Неплохо, но ты нас недооцениваешь ;) Правильный ответ: ${correctAnswer}`;
         resultDiv.className = "result purple";
@@ -255,20 +262,39 @@
         ${correctAnswer}`;
         resultDiv.className = "result purple";
         scoreForQuestion = 5;
-    } else if (questionNum > 2 && userAnswer == correctAnswer) {
+    } else if (questionNum > 2 && questionNum < 5 && userAnswer == correctAnswer) {
         resultDiv.innerHTML = `Ты попал в самое яблочко! Правильный ответ: ${correctAnswer}`;
         resultDiv.className = "result gold";
         scoreForQuestion = 20;
-    } else if (questionNum > 2 && diff <= 2) {
+    } else if (questionNum > 2 && questionNum < 5 && diff <= 2) {
         resultDiv.innerHTML = `Будем считать что ты угадал! Правильный ответ: ${correctAnswer}`;
         resultDiv.className = "result green";
         scoreForQuestion = 15;
-    } else if (questionNum > 2 && userAnswer <= correctAnswer - 3) {
+    } else if (questionNum > 2 && questionNum < 5 && userAnswer <= correctAnswer - 3) {
         resultDiv.innerHTML = `Неплохо, но ты нас недооцениваешь ;) Правильный ответ: ${correctAnswer}`;
         resultDiv.className = "result purple";
         scoreForQuestion = 5;
-    } else if (questionNum > 2 && userAnswer >= correctAnswer + 3) {
+    } else if (questionNum > 2 && questionNum < 5 && userAnswer >= correctAnswer + 3) {
         resultDiv.innerHTML = `Ого, мы конечно крутые, но верный ответ \"чуть\" меньше :D Правильный ответ:
+        ${correctAnswer}`;
+        resultDiv.className = "result purple";
+        scoreForQuestion = 5;
+    } else if (questionNum == 5 && userAnswer == correctAnswer) {
+        resultDiv.innerHTML = `Откуда ты вообще это знаешь (￣人￣) Твой ответ абсолютно верный!`;
+        resultDiv.className = "result gold";
+        scoreForQuestion = 5;
+    } else if (questionNum == 5 && diff <= 3) {
+        resultDiv.innerHTML = `Это было очень близко! Правильный ответ:
+        ${correctAnswer}`;
+        resultDiv.className = "result green";
+        scoreForQuestion = 5;
+    } else if (questionNum == 5 && userAnswer >= correctAnswer + 5) {
+        resultDiv.innerHTML = `Да, нас не мало, но Правильный ответ:
+        ${correctAnswer}`;
+        resultDiv.className = "result purple";
+        scoreForQuestion = 5;
+    } else if (questionNum == 5 && userAnswer <= correctAnswer - 5) {
+        resultDiv.innerHTML = `Как ни странно, нас будет побольше Правильный ответ:
         ${correctAnswer}`;
         resultDiv.className = "result purple";
         scoreForQuestion = 5;
